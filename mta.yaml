@@ -26,6 +26,9 @@ modules:
       - name: mtx-demo-db
       - name: mtx-demo-db-management
       - name: mtx-registry-management
+      - name: app-api
+        properties:
+          SUBSCRIPTION_URL: "~{app-protocol}://\\${tenant_subdomain}-~{app-uri}"
 
   - name: mtx-demo-db-deployer
     type: hdb
@@ -42,6 +45,8 @@ modules:
       keep-existing-routes: true
       disk-quota: 256M
       memory: 256M
+    properties:
+      TENANT_HOST_PATTERN: '^(.*)-${default-uri}'
     requires:
       - name: srv-api
         group: destinations
@@ -50,6 +55,11 @@ modules:
           url: ~{srv-url}
           forwardAuthToken: true
       - name: mtx-demo-auth
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: '${protocol}' #https
+          app-uri: '${default-uri}' #actual URL of app router
 
 resources:
   - name: mtx-demo-auth
