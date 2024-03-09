@@ -1,0 +1,2 @@
+>> cds init = to create a normal project
+>> cds add xsuaa,hana,approuter,mta
