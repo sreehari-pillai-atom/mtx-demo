@@ -16,7 +16,10 @@
     "@sap/cds-dk": "^7"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "build" : " mbt build -s .",
+    "deploy" : "cf deploy mta_archives/mtx-demo_1.0.0.mtar -f",
+    "cfdeploy" : "npm run build && npm run deploy"
   },
   "cds": {
     "requires": {
