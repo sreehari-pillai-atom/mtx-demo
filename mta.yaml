@@ -24,6 +24,8 @@ modules:
     requires:
       - name: mtx-demo-auth
       - name: mtx-demo-db
+      - name: mtx-demo-db-management
+      - name: mtx-registry-management
 
   - name: mtx-demo-db-deployer
     type: hdb
@@ -58,9 +60,42 @@ resources:
       path: ./xs-security.json
       config:
         xsappname: mtx-demo-${org}-${space}
-        tenant-mode: dedicated
+        tenant-mode: shared #dedicated
+
+   # container database is not required for multi tenancy , as it will be unused . 
   - name: mtx-demo-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
+
+ #service manager - for dynamic database contaienr creation 
+
+  - name: mtx-demo-db-management
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: service-manager
+      service-plan: container
+
+
+# SaaS Registry 
+
+  - name: mtx-registry-management
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv-api
+    parameters:
+      service: saas-registry
+      service-plan: application
+      config:
+        xsappname: 'mtx-demo-${org}-${space}'
+        appName: mtx-demo
+        displayName: MTX Product Applicaiton
+        description: MTX Product Applicaiton
+        category: DEMO
+        appUrls:
+          getDependencies: '~{srv-api/srv-url}/-/cds/saas-provisioning/dependencies'
+          onSubscription: '~{srv-api/srv-url}/-/cds/saas-provisioning/tenant/{tenantId}'
+          onSubscriptionAsync: false
+          onUnSubscriptionAsync: false
+          callbackTimeoutMillis: 100000

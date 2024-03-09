@@ -1,1 +1,12 @@
-{}
+{
+    "requires": {
+      "[production]": {
+        "multitenancy": true,
+        "toggles": true,
+        "extensibility": true,
+        "db": {
+          "kind": "hana-mt"
+        }
+      }
+    }
+}
