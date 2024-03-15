@@ -4,7 +4,7 @@ _out
 *.sqlite
 connection.properties
 default-*.json
-.cdsrc-private.json
+#.cdsrc-private.json -this must not be commetned in general
 gen/
 node_modules/
 target/
