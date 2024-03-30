@@ -29,6 +29,7 @@ modules:
       - name: app-api
         properties:
           SUBSCRIPTION_URL: "~{app-protocol}://\\${tenant_subdomain}-~{app-uri}"
+      - name: mtx-demo-destination
 
   - name: mtx-demo-db-deployer
     type: hdb
@@ -104,8 +105,13 @@ resources:
         description: MTX Product Applicaiton
         category: DEMO
         appUrls:
-          getDependencies: '~{srv-api/srv-url}/-/cds/saas-provisioning/dependencies'
+          getDependencies: '~{srv-api/srv-url}/getDependencies'
           onSubscription: '~{srv-api/srv-url}/-/cds/saas-provisioning/tenant/{tenantId}'
           onSubscriptionAsync: false
           onUnSubscriptionAsync: false
           callbackTimeoutMillis: 100000
+  - name: mtx-demo-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
