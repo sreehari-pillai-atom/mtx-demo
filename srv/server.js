@@ -24,6 +24,11 @@ cds.on("bootstrap",  (app) => {
          res.status(200).json(deps);
        });
 
+       app.put("/-/cds/saas-provisioning/tenant/" , async(req,res,next)=>{
+          let data = await next(); //default implementation is executed. 
+          //create routes , destination , load master data etc. 
+       } 
+       );
 
        app.delete("/-/cds/saas-provisioning/tenant/*" , async(req,res)=>{
          //runs for unsubscription - test this please 
