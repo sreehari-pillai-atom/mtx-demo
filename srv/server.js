@@ -23,4 +23,10 @@ cds.on("bootstrap",  (app) => {
          });
          res.status(200).json(deps);
        });
+
+
+       app.delete("/-/cds/saas-provisioning/tenant/*" , async(req,res)=>{
+         //runs for unsubscription - test this please 
+          res.sendStatus(201);
+       });
   });
