@@ -105,7 +105,8 @@ resources:
         description: MTX Product Applicaiton
         category: DEMO
         appUrls:
-          getDependencies: '~{srv-api/srv-url}/getDependencies'
+          getDependencies: '~{srv-api/srv-url}/getDependencies' #this is my own implementation of getDependencies service. 
+          #I don't like standard implementation. It did not share my destination service as a dependency 
           onSubscription: '~{srv-api/srv-url}/-/cds/saas-provisioning/tenant/{tenantId}'
           onSubscriptionAsync: false
           onUnSubscriptionAsync: false
